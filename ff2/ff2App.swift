@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct ff2App: App {
+    //public static var mainURL:String = "https://taurus.com"
+    public static var mainURL:String = "https://www.fatalflawlit.com"
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(hardURLString: ff2App.mainURL)
         }
     }
 }
