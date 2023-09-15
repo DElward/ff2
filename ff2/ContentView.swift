@@ -11,16 +11,14 @@ import SwiftUI
 
 struct ContentView: View {
     
-    var hardURLString : String
-    
-    @StateObject var model = WebViewModel(hardURLString: ff2App.mainURL)
+    @StateObject var model = WebViewModel(hardURLString: ff2App.mainURL())
     
     var body: some View {
         ZStack(alignment: .bottom) {
             Color.black
                 .ignoresSafeArea()
             
-            WebView(hardURLString: hardURLString, webView: model.webView)
+            WebView(hardURLString: ff2App.mainURL(), webView: model.webView)
             
             if model.isLoading {
                 ProgressView()
@@ -37,7 +35,7 @@ struct ContentView: View {
                 .disabled(!model.canGoBack)
 
                 Button(action: {
-                    model.loadUrlString(urlStr: ff2App.mainURL)
+                    model.loadUrlString(urlStr: ff2App.mainURL())
                 }, label: {
                     Image(systemName: "house")
                 })
@@ -59,14 +57,17 @@ struct ContentView: View {
 //                }, label: {
 //                    Image(systemName: "magazine")
 //                })
-                Button(action: openCurrentIssue) {
-                        Label("Current Issue", systemImage: "magazine")
-                    }
+//                Button(action: openCurrentIssue) {
+//                        Label("Current Issue", systemImage: "magazine")
+//                    }
                 Button(action: refreshPage) {
                         Label("Refresh", systemImage: "arrow.clockwise.circle")
                     }
                 Button(action: zoomOut) {
                         Label("Zoom Out", systemImage: "minus.magnifyingglass")
+                    }
+                Button(action: zoomOne) {
+                        Label("Zoom One", systemImage: "1.magnifyingglass")
                     }
                 Button(action: zoomIn) {
                         Label("Zoom In", systemImage: "plus.magnifyingglass")
@@ -76,14 +77,18 @@ struct ContentView: View {
         }
     }
     
-    func openCurrentIssue () {
-        model.loadUrlString(urlStr: ff2App.mainURL + "/Services")
-    }
+//    func openCurrentIssue () {
+//        model.loadUrlString(urlStr: ff2App.mainURL() + "/Services")
+//    }
     
     func zoomIn () {
         model.zoomIn()
     }
     
+    func zoomOne () {
+        model.zoomOne()
+    }
+
     func zoomOut () {
         model.zoomOut()
     }
@@ -95,6 +100,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(hardURLString: ff2App.mainURL)
+        ContentView()
     }
 }

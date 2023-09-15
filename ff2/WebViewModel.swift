@@ -15,6 +15,7 @@ class WebViewModel: ObservableObject {
 
     private let navigationDelegate: WebViewNavigationDelegate
     private var zoomMagnification:CGFloat = 1.0
+    private let magnificationFactor:CGFloat = 1.3
 
     init(hardURLString : String) {
         let configuration = WKWebViewConfiguration()
@@ -72,14 +73,27 @@ class WebViewModel: ObservableObject {
     func goBack() {
         webView.goBack()
     }
-    
+
+    func setZoom(_ newZoom : CGFloat) {
+        if let wView = webView.navigationDelegate as? WebViewNavigationDelegate {
+            wView.setZoom(newZoom: newZoom)
+            refreshPage()
+        }
+    }
+
     func zoomIn () {
-        zoomMagnification *= 1.5
-        webView.pageZoom = zoomMagnification
+        zoomMagnification *= magnificationFactor
+        setZoom(zoomMagnification)
     }
     
+    func zoomOne () {
+        zoomMagnification = 1.0
+        setZoom(zoomMagnification)
+    }
+
     func zoomOut () {
-        zoomMagnification /= 1.5
-        webView.pageZoom = zoomMagnification
+        zoomMagnification /= magnificationFactor
+        //webView.pageZoom = zoomMagnification
+        setZoom(zoomMagnification)
     }
 }
