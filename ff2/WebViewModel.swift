@@ -15,15 +15,16 @@ class WebViewModel: ObservableObject {
 
     private let navigationDelegate: WebViewNavigationDelegate
     private var zoomMagnification:CGFloat = 1.0
-    private let magnificationFactor:CGFloat = 1.3
+    private let magnificationFactor:CGFloat = 11.0 / 8.0    // 1.375
 
     init(hardURLString : String) {
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = .nonPersistent()
         webView = WKWebView(frame: .zero, configuration: configuration)
-        navigationDelegate = WebViewNavigationDelegate()
 
+        navigationDelegate = WebViewNavigationDelegate()
         webView.navigationDelegate = navigationDelegate
+
         setupBindings()
         loadUrlString(urlStr : hardURLString)
     }
@@ -95,5 +96,9 @@ class WebViewModel: ObservableObject {
         zoomMagnification /= magnificationFactor
         //webView.pageZoom = zoomMagnification
         setZoom(zoomMagnification)
+    }
+
+    func save() {
+        print("Called model.save")
     }
 }

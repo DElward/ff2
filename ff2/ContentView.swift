@@ -12,7 +12,15 @@ import SwiftUI
 struct ContentView: View {
     
     @StateObject var model = WebViewModel(hardURLString: ff2App.mainURL())
-    
+
+    //  @EnvironmentObject var model: WebViewModel  // 09/20/2023
+
+    // 09/19/2023 - Used for detecting when this scene is backgrounded and isn't currently visible.
+    @Environment(\.scenePhase) private var scenePhase
+
+    // 09/19/2023 - The currently selected product, if any.
+    @SceneStorage("ContentView.selectedProduct") private var selectedProduct: String?
+
     var body: some View {
         ZStack(alignment: .bottom) {
             Color.black
@@ -73,6 +81,20 @@ struct ContentView: View {
                         Label("Zoom In", systemImage: "plus.magnifyingglass")
                     }
                 Spacer()
+            }
+        }
+        // 09/19/2023
+        .onContinueUserActivity("FatalFlaw") { userActivity in
+            // Don't know if I need this
+            print("onContinueUserActivity")
+        }
+        
+        // 09/19/2023
+        .onChange(of: scenePhase) { newScenePhase in
+            print("onChange")
+            if newScenePhase == .background {
+                // Make sure to save any unsaved changes to the products model.
+                model.save()
             }
         }
     }
