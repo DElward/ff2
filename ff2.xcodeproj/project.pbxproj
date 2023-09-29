@@ -14,6 +14,7 @@
 		552A760C2A97D043004EE700 /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552A760B2A97D043004EE700 /* WebViewModel.swift */; };
 		552A760E2A97D0A8004EE700 /* WebViewNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552A760D2A97D0A8004EE700 /* WebViewNavigationDelegate.swift */; };
 		552A76102A97D136004EE700 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552A760F2A97D136004EE700 /* WebView.swift */; };
+		55CE829D2AC5EDF7002C2570 /* WebViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CE829C2AC5EDF7002C2570 /* WebViewConfiguration.swift */; };
 		55F9941A2AB8CDEC003DF750 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F994192AB8CDEC003DF750 /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +27,7 @@
 		552A760B2A97D043004EE700 /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
 		552A760D2A97D0A8004EE700 /* WebViewNavigationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewNavigationDelegate.swift; sourceTree = "<group>"; };
 		552A760F2A97D136004EE700 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		55CE829C2AC5EDF7002C2570 /* WebViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewConfiguration.swift; sourceTree = "<group>"; };
 		55F994192AB8CDEC003DF750 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,6 +65,7 @@
 				552A75FF2A97CFCE004EE700 /* ContentView.swift */,
 				552A760F2A97D136004EE700 /* WebView.swift */,
 				552A760B2A97D043004EE700 /* WebViewModel.swift */,
+				55CE829C2AC5EDF7002C2570 /* WebViewConfiguration.swift */,
 				552A760D2A97D0A8004EE700 /* WebViewNavigationDelegate.swift */,
 				55F994192AB8CDEC003DF750 /* ViewController.swift */,
 				552A76012A97CFD0004EE700 /* Assets.xcassets */,
@@ -149,6 +152,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55CE829D2AC5EDF7002C2570 /* WebViewConfiguration.swift in Sources */,
 				55F9941A2AB8CDEC003DF750 /* ViewController.swift in Sources */,
 				552A76002A97CFCE004EE700 /* ContentView.swift in Sources */,
 				552A76102A97D136004EE700 /* WebView.swift in Sources */,

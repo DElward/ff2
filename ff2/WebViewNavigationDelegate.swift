@@ -11,11 +11,32 @@ class WebViewNavigationDelegate: NSObject, WKNavigationDelegate {
     
     private var zoomPercent:CGFloat = 100.0
     private var isZoomed: Bool = false
-    private var currentPage: String?
+    private var currentPage: String = ""
+    private var currentScrollPosition:CGPoint = .zero
+    private var newScrollPosition:CGPoint = .zero
+    private var isNewScrollPosition: Bool = false
     
-    func setZoom(newZoom : CGFloat) {
+    func setCurrentScrollPosition(_ scrollPosition: CGPoint) {
+        currentScrollPosition = scrollPosition
+    }
+    
+    func setZoom(_ newZoom : CGFloat) {
         zoomPercent = newZoom * 100.0
         isZoomed = true
+    }
+    
+    func getCurrentPage() -> String {
+        currentPage
+    }
+    
+    func getCurrentScrollPosition() -> CGPoint {
+        currentScrollPosition
+    }
+    
+    func setNewScrollPosition(_ newPosition:CGPoint)  {
+        print("setNewScrollPosition()")
+        newScrollPosition = newPosition
+        isNewScrollPosition = true
     }
     
     func okToLoad(_ navigationAction: WKNavigationAction) -> WKNavigationActionPolicy {
@@ -45,6 +66,7 @@ class WebViewNavigationDelegate: NSObject, WKNavigationDelegate {
         } else {
             if let url = navigationAction.request.url {
                 currentPage = url.path
+                currentScrollPosition = .zero
             }
         }
         
@@ -57,7 +79,7 @@ class WebViewNavigationDelegate: NSObject, WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        print("Current page: \(currentPage ?? "Nil")")
+        print("WebViewNavigationDelegate.webView(didFinish) Current page: \(currentPage)")
         if isZoomed {
             let js = "document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust='\(zoomPercent.rounded())%'"
             webView.evaluateJavaScript(js, completionHandler: nil)
@@ -65,13 +87,21 @@ class WebViewNavigationDelegate: NSObject, WKNavigationDelegate {
                 isZoomed = false
             }
         }
-        let sv = webView.scrollView
-        let rect = CGRect(x: 0, y: 255.0, width: 393, height: 6357) // x=0.0 y=255.0 width=393.0 height=6357.0
-        sv.scrollRectToVisible(rect, animated: false)
-        let co = sv.contentOffset
-        let cs = sv.contentSize
-        let fr = sv.frame
-        print("Called webView() x=\(co.x) y=\(co.y) width=\(cs.width) height=\(cs.height)")
-        print("           frame x=\(fr.origin.x) y=\(fr.origin.y) width=\(fr.width) height=\(fr.height)")
+        if isNewScrollPosition {
+            print("adjusted scroll position")
+            webView.scrollView.setContentOffset(newScrollPosition, animated: false)
+            isNewScrollPosition = false
+        }
+        currentScrollPosition = webView.scrollView.contentOffset
+        print("Called webView() currentScrollPosition x=\(currentScrollPosition.x) y=\(currentScrollPosition.y)")
+        //        let sv = webView.scrollView
+        //        sv.setContentOffset(CGPoint(x: 0, y: 255), animated: false)
+        //        let co = sv.contentOffset
+        //        let cs = sv.contentSize
+        //        let fr = sv.frame
+        //        let sp = sv.layer.position
+        //        print("Called webView() x=\(co.x) y=\(co.y) width=\(cs.width) height=\(cs.height)")
+        //        print("           frame x=\(fr.origin.x) y=\(fr.origin.y) width=\(fr.width) height=\(fr.height)")
+        //        print("  layer.position x=\(sp.x) y=\(sp.y)")
     }
 }

@@ -11,9 +11,9 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject var model = WebViewModel(hardURLString: ff2App.mainURL())
+    @StateObject var model = WebViewModel()
 
-    //  @EnvironmentObject var model: WebViewModel  // 09/20/2023
+    //  @EnvironmentObject var model: WebViewModel  // 09/28/2023
 
     // 09/19/2023 - Used for detecting when this scene is backgrounded and isn't currently visible.
     @Environment(\.scenePhase) private var scenePhase
@@ -43,7 +43,7 @@ struct ContentView: View {
                 .disabled(!model.canGoBack)
 
                 Button(action: {
-                    model.loadUrlString(urlStr: ff2App.mainURL())
+                    model.loadUrlString(ff2App.mainURL())
                 }, label: {
                     Image(systemName: "house")
                 })
@@ -83,15 +83,15 @@ struct ContentView: View {
                 Spacer()
             }
         }
-        // 09/19/2023
-        .onContinueUserActivity("FatalFlaw") { userActivity in
-            // Don't know if I need this
-            print("onContinueUserActivity")
-        }
+//        // 09/19/2023
+//        .onContinueUserActivity("FatalFlaw") { userActivity in
+//            // Don't know if I need this
+//            print("onContinueUserActivity")
+//        }
         
         // 09/19/2023
         .onChange(of: scenePhase) { newScenePhase in
-            print("onChange")
+            //print("onChange")
             if newScenePhase == .background {
                 // Make sure to save any unsaved changes to the products model.
                 model.save()

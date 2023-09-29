@@ -20,8 +20,13 @@ class ViewController: NSObject, UIScrollViewDelegate, WKUIDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let co = scrollView.contentOffset
-        let cs = scrollView.contentSize
-        print("Called scrollViewDidScroll() x=\(co.x) y=\(co.y) width=\(cs.width) height=\(cs.height)")
-   }
+        //let cs = scrollView.contentSize
+        //let sp = scrollView.layer.position
+        let del: WebViewNavigationDelegate? = self.parent.webView.navigationDelegate as? WebViewNavigationDelegate
+        if (del != nil) {
+            //print("Called scrollViewDidScroll() x=\(co.x) y=\(co.y), page=\(del!.getCurrentPage())")
+            del!.setCurrentScrollPosition(co)
+        }
+    }
 }
 
