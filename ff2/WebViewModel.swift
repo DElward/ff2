@@ -26,9 +26,9 @@ class WebViewModel: ObservableObject {
             // Decode the json file into a DataModel object.
             let decoder = JSONDecoder()
             if let decoded = try? decoder.decode(WebViewConfiguration.self, from: codedData) {
-                print("WebViewModel.init() Read json config")
                 webViewConfig = decoded
-            } else {
+                print("WebViewModel.init() Read json config -  Current page: \(webViewConfig.currentPage) x=\(webViewConfig.currentScrollPosition.x) y=\(webViewConfig.currentScrollPosition.y)")
+           } else {
                 print("WebViewModel.init() Error decoding - default config")
                 webViewConfig = WebViewConfiguration(currentPage: "/", currentScrollPosition: CGPoint.zero, zoomMagnification: 1.0)
             }
@@ -98,18 +98,41 @@ class WebViewModel: ObservableObject {
     }
 
     func refreshPage() {
-        webView.reload()
+       //let csp = webView.scrollView.contentOffset
+       webView.reload()
+       //print("-------- Called WebViewModel.refreshPage() contentOffset: x=\(csp.x) y=\(csp.y)")
+       //navigationDelegate.setNewScrollPosition(csp)
+//        printPagesVisited()
     }
 
     func goBack() {
         webView.goBack()
     }
+    
+    func gotoHome () {
+        loadUrlString(ff2App.mainURL())
+        //BAD// loadUrlString("https://padpage.fatalflawlit.com")
+        //navigationDelegate.setNewScrollPosition(.zero)
+        webView.scrollView.contentOffset = .zero
+        //let csp = webView.scrollView.contentOffset
+        //print("-------- Called WebViewModel.gotoHome() contentOffset: x=\(csp.x) y=\(csp.y)")
+    }
+    
+//    func printPagesVisited () {
+//        print("Pages visited:")
+//        for page in webView.backForwardList.backList {
+//            print("User visited \(page.url.absoluteString)")
+//        }
+//    }
 
     func setZoom(_ newZoom : CGFloat) {
+//        printPagesVisited()
         if let wView = webView.navigationDelegate as? WebViewNavigationDelegate {
             wView.setZoom(newZoom)
             refreshPage()
         }
+//        let csp = webView.scrollView.contentOffset
+//        print("-------- Called WebViewModel.setZoom(\(newZoom)) contentOffset: x=\(csp.x) y=\(csp.y)")
     }
 
     func zoomIn () {

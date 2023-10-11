@@ -10,12 +10,13 @@ import WebKit
 import SwiftUI
 
 struct WebView: UIViewRepresentable {
-    var hardURLString : String
+    //var hardURLString : String
+    let webView: WKWebView
+
     var contentInset: UIEdgeInsets = .zero
 
     typealias UIViewType = WKWebView
 
-    let webView: WKWebView
     
     func makeUIView(context: Context) -> WKWebView {
         webView.scrollView.delegate = context.coordinator   // 09/18/2023

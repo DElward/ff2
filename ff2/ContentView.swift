@@ -26,7 +26,7 @@ struct ContentView: View {
             Color.black
                 .ignoresSafeArea()
             
-            WebView(hardURLString: ff2App.mainURL(), webView: model.webView)
+            WebView(webView: model.webView)
             
             if model.isLoading {
                 ProgressView()
@@ -43,7 +43,7 @@ struct ContentView: View {
                 .disabled(!model.canGoBack)
 
                 Button(action: {
-                    model.loadUrlString(ff2App.mainURL())
+                    model.gotoHome()
                 }, label: {
                     Image(systemName: "house")
                 })
