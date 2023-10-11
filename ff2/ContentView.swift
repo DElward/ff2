@@ -23,8 +23,8 @@ struct ContentView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            Color.black
-                .ignoresSafeArea()
+//            Color.black
+//                .ignoresSafeArea()
             
             WebView(webView: model.webView)
             

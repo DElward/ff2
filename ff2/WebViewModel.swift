@@ -84,7 +84,9 @@ class WebViewModel: ObservableObject {
         guard let url = URL(string: urlString) else {
             return
         }
-
+//        Task.detached(priority: .background) {
+//            await self.webView.load(URLRequest(url: url))
+//        }
         webView.load(URLRequest(url: url))
     }
 
